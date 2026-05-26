@@ -1,25 +1,37 @@
-import pygame
-pygame.init()
-screen = pygame.display.set_mode((1200, 900))
-background_color = (30, 30, 30)
+import tkinter as tk
 
-def main():
-    running = True
-    while running:
-        screen.fill(background_color)
-        title_font = pygame.font.SysFont('Arial', 48)
-        title_text = title_font.render('To-Do List', True, (255, 255, 255))
-        screen.blit(title_text, (screen.get_width() // 2 - title_text.get_width() // 2, 50))
-        
-        button_font = pygame.font.SysFont('Arial', 36)
-        add_button = button_font.render('Add Task', True, (255, 255, 255))
-        
-        
-        pygame.display.flip()
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-    pygame.quit()
-main()
+main = tk.Tk()
+main.geometry("1000x750")
+
+label = tk.Label(main, text='todo list', font=('Arial', 40))
+label.pack()
+insert = tk.Toplevel()
+insert.title('add to list')
+insert.geometry('300x200')
+insert.withdraw()
+entry = tk.Entry(insert, width=20)
+entry.pack(padx=15, pady=15)
+
+def addnew():
+    new = entry.get()
+    
+    if new:
+        num = list.size() + 1
+        list.insert('end', f"{num}. {new}")
+    
+button = tk.Button(insert, text='add', width=20, background='blue', fg='white', command=lambda: addnew())
+button = tk.Button(main, text='add to list', width=20, background='blue', fg='white', command=lambda: insert.deiconify())
+button.pack(padx=15, pady=15)
+container = tk.Frame(main, background='white', width=500, height=500)
+container.pack(fill='both', expand=True)
+list = tk.Listbox(container, width=30, height=10, font=('Arial', 24))
+list.pack(padx=15, pady=15)
+
+
+
+tk.mainloop()
+
+
+
     
 
