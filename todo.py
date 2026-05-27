@@ -128,6 +128,22 @@ delete_main.grid(row=0, column=2, padx=5, pady=5)
 delete_back.grid(row=0, column=3, padx=5, pady=5)
 open_add_btn.grid(row=0, column=4, padx=5, pady=5)
 
+def load():
+
+    global focus_data
+    global backburner_data
+
+    try:
+        with open("todo_data.json", "r") as f:
+            data = json.load(f)
+
+        focus_data = data["focus"]
+        backburner_data = data["backburner"]
+
+        refresh()
+
+    except FileNotFoundError:
+        pass
 
 def save():
     data = {
@@ -139,12 +155,12 @@ def save():
         json.dump(data, f)
 
 
-def save_and_exit():
+def close():
     save()
     main.destroy()
 
 
-main.protocol("WM_DELETE_WINDOW", save_and_exit)
+main.protocol("WM_DELETE_WINDOW", close)
 
-refresh()
+load()
 tk.mainloop()
